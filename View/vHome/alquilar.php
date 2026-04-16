@@ -1,6 +1,9 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-CE02/View/layoutExterno.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-CE02/Controller/CasasController.php";
 
+$mensaje = AlquilarCasaController();
+$casasDisponibles = ObtenerCasasDisponiblesController();
 ?>
 
 <!DOCTYPE html>
@@ -24,22 +27,22 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-
                                     <div class="d-flex">
                                         <a href="consultar.php" class="btn btn-gradient-danger btn-rounded btn-fw">
                                             <i class="mdi mdi-arrow-left"></i>
-                                            Ir al Consulta
+                                            Ir a Consulta
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row justify-content-center">
                                 <div class="col-md-8 col-lg-6">
-
                                     <?php if (!empty($mensaje)) { ?>
-                                        <div id="mensajeExito" class="alert alert-success text-center">
+                                        <div class="alert alert-danger text-center">
                                             <?php echo $mensaje; ?>
                                         </div>
                                     <?php } ?>
-
                                 </div>
                             </div>
+
                             <div class="row justify-content-center">
                                 <div class="col-md-8 col-lg-6 grid-margin stretch-card">
                                     <div class="card bg-gradient-success card-img-holder shadow-lg">
@@ -49,18 +52,20 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-
                                                 alt="circle-image" />
 
                                             <h4 class="card-title text-center mb-4 text-white">
-                                                Registro de Abono
+                                                Alquiler de Casas
                                             </h4>
 
-                                            <!-- <form action="" method="POST" id="formAbono">
+                                            <form action="" method="POST" id="formAlquiler">
+
                                                 <div class="form-group">
-                                                    <label class="text-white"><strong>Compra</strong></label>
-                                                    <select name="Id_Compra" id="Id_Compra" class="form-control">
-                                                        <option value="">Seleccione una compra</option>
-                                                        <?php if ($comprasPendientes != null && $comprasPendientes->num_rows > 0) { ?>
-                                                            <?php while ($row = $comprasPendientes->fetch_assoc()) { ?>
-                                                                <option value="<?php echo $row["Id_Compra"]; ?>">
-                                                                    <?php echo $row["Id_Compra"] . " - " . htmlspecialchars($row["Descripcion"]); ?>
+                                                    <label class="text-white"><strong>Casa</strong></label>
+                                                    <select name="IdCasa" id="IdCasa" class="form-control" required>
+                                                        <option value="">Seleccione una casa</option>
+                                                        <?php if ($casasDisponibles != null && $casasDisponibles->num_rows > 0) { ?>
+                                                            <?php while ($row = $casasDisponibles->fetch_assoc()) { ?>
+                                                                <option value="<?php echo $row["IdCasa"]; ?>"
+                                                                    data-precio="<?php echo $row["PrecioCasa"]; ?>">
+                                                                    <?php echo htmlspecialchars($row["DescripcionCasa"]); ?>
                                                                 </option>
                                                             <?php } ?>
                                                         <?php } ?>
@@ -68,22 +73,22 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="text-white"><strong>Saldo Anterior</strong></label>
-                                                    <input type="text" name="SaldoAnteriorVista" id="SaldoAnteriorVista" class="form-control" readonly>
-                                                    <input type="hidden" name="SaldoAnterior" id="SaldoAnterior">
+                                                    <label class="text-white"><strong>Precio mensual</strong></label>
+                                                    <input type="text" name="PrecioCasaVista" id="PrecioCasaVista" class="form-control" readonly>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label class="text-white"><strong>Abono</strong></label>
-                                                    <input type="number" step="0.01" min="0.01" name="Abono" id="Abono" class="form-control" onkeypress="return soloNumeros(event)">
+                                                    <label class="text-white"><strong>Usuario alquiler</strong></label>
+                                                    <input type="text" name="UsuarioAlquiler" id="UsuarioAlquiler" class="form-control" maxlength="30" required>
                                                 </div>
 
                                                 <div class="text-center mt-4">
-                                                    <button type="submit" name="btnAbonar" id="btnAbonar" class="btn btn-gradient-danger btn-rounded btn-fw">
-                                                        Abonar
+                                                    <button type="submit" name="btnAlquilar" id="btnAlquilar" class="btn btn-gradient-danger btn-rounded btn-fw">
+                                                        Alquilar
                                                     </button>
                                                 </div>
-                                            </form> -->
+
+                                            </form>
 
                                         </div>
                                     </div>
@@ -100,7 +105,7 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-
     </div>
 
     <?php MostrarJS(); ?>
-    <script src="../assets/funciones/consultas.js"></script>
+    <script src="../assets/funciones/casas.js"></script>
 </body>
 
 </html>

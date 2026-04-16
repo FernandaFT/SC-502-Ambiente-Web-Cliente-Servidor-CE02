@@ -45,7 +45,7 @@ MostrarCSS();
                                     </h4>
                                     <p class="mb-5"> Registra el alquiler de una casa disponible,
                                                      asignando el usuario y actualizando su estado automáticamente.</p>
-                                    <a href="registrar.php"
+                                    <a href="alquilar.php"
                                         class="btn btn-gradient-danger btn-rounded btn-fw">
                                         Alquilar Casa
                                         <i class="mdi mdi-arrow-right"></i>

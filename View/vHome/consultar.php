@@ -1,6 +1,8 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-CE02/View/layoutExterno.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-CE02/Controller/CasasController.php";
 
+$casas = ConsultarCasasController();
 ?>
 
 <!DOCTYPE html>
@@ -39,55 +41,66 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/SC-502-Ambiente-Web-Cliente-Servidor-
                                                 alt="circle-image" />
 
                                             <h4 class="card-title text-center mb-4 text-white">
-                                                Consulta de Compras
+                                                Consulta de Casas
                                             </h4>
 
                                             <div class="table-responsive">
-                                                <!-- <table class="table table-hover table-striped text-center">
+                                                <table class="table table-hover table-striped text-center">
                                                     <thead>
                                                         <tr>
-                                                            <th>Código Compra</th>
                                                             <th>Descripción</th>
                                                             <th>Precio</th>
-                                                            <th>Saldo</th>
+                                                            <th>Usuario</th>
                                                             <th>Estado</th>
+                                                            <th>Fecha</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php if ($compras != null && $compras->num_rows > 0) { ?>
-                                                            <?php while ($row = $compras->fetch_assoc()) { ?>
+                                                        <?php if ($casas != null && $casas->num_rows > 0) { ?>
+                                                            <?php while ($row = $casas->fetch_assoc()) { ?>
                                                                 <tr>
-                                                                    <td><?php echo htmlspecialchars($row["Id_Compra"]); ?></td>
-                                                                    <td><?php echo htmlspecialchars($row["Descripcion"]); ?></td>
-                                                                    <td>₡<?php echo number_format($row["Precio"], 2); ?></td>
-                                                                    <td>₡<?php echo number_format($row["Saldo"], 2); ?></td>
+                                                                    <td><?php echo htmlspecialchars($row["DescripcionCasa"]); ?></td>
+                                                                    <td>₡<?php echo number_format($row["PrecioCasa"], 2); ?></td>
                                                                     <td>
-                                                                        <?php if ($row["Estado"] == "Pendiente") { ?>
-                                                                            <label class="badge badge-warning">
-                                                                                <?php echo htmlspecialchars($row["Estado"]); ?>
-                                                                            </label>
-                                                                        <?php } else { ?>
+                                                                        <?php
+                                                                        echo !empty($row["UsuarioAlquiler"])
+                                                                            ? htmlspecialchars($row["UsuarioAlquiler"])
+                                                                            : "Sin asignar";
+                                                                        ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php if ($row["Estado"] == "Disponible") { ?>
                                                                             <label class="badge badge-success">
                                                                                 <?php echo htmlspecialchars($row["Estado"]); ?>
                                                                             </label>
+                                                                        <?php } else { ?>
+                                                                            <label class="badge badge-warning">
+                                                                                <?php echo htmlspecialchars($row["Estado"]); ?>
+                                                                            </label>
                                                                         <?php } ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
+                                                                        echo !empty($row["FechaAlquiler"])
+                                                                            ? htmlspecialchars($row["FechaAlquiler"])
+                                                                            : "Sin fecha";
+                                                                        ?>
                                                                     </td>
                                                                 </tr>
                                                             <?php } ?>
                                                         <?php } else { ?>
                                                             <tr>
-                                                                <td colspan="5">No hay compras registradas</td>
+                                                                <td colspan="5">No hay casas disponibles para mostrar</td>
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
-                                                </table> -->
+                                                </table>
                                             </div>
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
